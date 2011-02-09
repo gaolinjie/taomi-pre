@@ -47,7 +47,7 @@ HOWTO install Broadcom wifi driver on Lenovo S10-3t netbook
   
   
 ####引用和参考：  
-[](http://slaine.org/_slaine/Meego_1.1_Wifi.html)  
-[](http://forum.meego.com/archive/index.php/t-1793.html)  
-[](http://forum.meego.com/showthread.php?p=7905#post7905)
+[http://slaine.org/_slaine/Meego_1.1_Wifi.html](http://slaine.org/_slaine/Meego_1.1_Wifi.html)   
+[http://forum.meego.com/archive/index.php/t-1793.html](http://forum.meego.com/archive/index.php/t-1793.html)   
+[http://forum.meego.com/showthread.php?p=7905#post7905](http://forum.meego.com/showthread.php?p=7905#post7905)   
   
