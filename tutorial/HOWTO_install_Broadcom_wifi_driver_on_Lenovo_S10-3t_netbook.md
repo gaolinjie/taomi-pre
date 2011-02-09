@@ -7,7 +7,7 @@ HOWTO install Broadcom wifi driver on Lenovo S10-3t netbook
 注意用户要设为glen，否则在后面编译驱动时会出现找不到glen用户的错误。     
    
 ###编译和安装wifi驱动  
-这部分的教程主要参照了`http://slaine.org/_slaine/Meego_1.1_Wifi.html`中所提供的方法。  
+这部分的教程主要参照了[http://slaine.org/_slaine/Meego_1.1_Wifi.html](http://slaine.org/_slaine/Meego_1.1_Wifi.html)中所提供的方法。  
 首先在meego中打开终端，  
     $ sudo zypper install rpmdevtools  
     # 使用该命令安装一些必备的工具。  
