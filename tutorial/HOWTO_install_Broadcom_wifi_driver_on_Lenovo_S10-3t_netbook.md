@@ -32,7 +32,7 @@ HOWTO install Broadcom wifi driver on Lenovo S10-3t netbook
 此时在网络中会看到蓝牙开关的出现，但是WIFI却还是没出现。
   
 ###再次编译和安装wifi驱动  
-首先从下载wifi驱动压缩文件，
+首先从[http://www.broadcom.com/support/802.11/linux_sta.php](http://www.broadcom.com/support/802.11/linux_sta.php)下载wifi驱动压缩文件，
     $ gunzip filename.tar.gz
     $ tar xvf filename.tar
     # 解压缩驱动压缩包。  
