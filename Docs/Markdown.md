@@ -28,21 +28,21 @@ else in the doc, define the link:
 
 [id]: /url/to/img.jpg "Title"  
 
-###标题  
-####Setext风格  
-Header 1
-========
+###标题    
+####Setext风格    
+Header 1  
+========  
 
-Header 2
---------  
- 
+Header 2  
+--------    
+
 ####atx风格（#可选）  
-# Header 1 #
+# Header 1 #  
 
-## Header 2 ##
+## Header 2 ##  
 
 ###### Header 6  
- 
+
 ###列表  
 ####有序，无段  
 1.  Foo
@@ -90,8 +90,9 @@ This is a normal paragraph.
     This is a preformatted
     code block.  
   
-###水平线   
+###水平线     
 三个或更多的破折号或星号：
+
 --- 
 
 * * *
