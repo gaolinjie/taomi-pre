@@ -24,7 +24,7 @@ An [example](http://url.com/ "Title")
     
       [id]: http://example.com/  "Title"  
 `效果：`  
-An [example][id]. Then, anywhere
+An [example][id]. Then, anywhere  
 else in the doc, define the link:
 
   [id]: http://example.com/  "Title" 
@@ -86,9 +86,9 @@ Header 2
 
     *   Bar  
 `效果：`  
-*   A list item.  
+*   A list item.
 
-    With multiple paragraphs.  
+    With multiple paragraphs.
 
 *   Bar  
   
@@ -103,14 +103,14 @@ Header 2
         3. burper
     *   Cunning  
 `效果：`  
-*   Abacus  
-    * answer  
-*   Bubbles  
-    1.  bunk  
-    2.  bupkis  
-        * BELITTLER  
-    3. burper  
-*   Cunning    
+*   Abacus
+    * answer
+*   Bubbles
+    1.  bunk
+    2.  bupkis
+        * BELITTLER
+    3. burper
+*   Cunning     
  
 ###六、引用文字  
 `代码：`
@@ -169,7 +169,8 @@ This is a normal paragraph.
     * * *  
 
     - - - -   
-`效果：`  
+`效果：`
+  
 ---   
 
 * * *  
