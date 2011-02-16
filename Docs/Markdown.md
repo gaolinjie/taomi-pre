@@ -53,7 +53,8 @@ else in the doc, define the link:
     ========  
     Header 2  
     --------    
-`效果：`  
+`效果：`
+
 Header 1  
 ========  
 Header 2  
@@ -64,7 +65,8 @@ Header 2
     # Header 1    
     ## Header 2    
     ###### Header 6    
-`效果：`  
+`效果：`
+
 # Header 1   
 ## Header 2    
 ###### Header 6  
@@ -87,11 +89,12 @@ Header 2
     *   Bar  
 `效果：`
    
-* A list item.  
+*   A list item.  
 
-  With multiple paragraphs.  
+    With multiple paragraphs.  
 
-* Bar    
+*   Bar   
+（与效果之间的空行是必要的）   
   
 #####3.你可以嵌套上述两种方式  
 `代码：`
@@ -164,7 +167,7 @@ This is a normal paragraph.
     code block.  
   
 ###九、水平线     
-三个或更多的破折号或星号：
+三个或更多的破折号或星号：  
 `代码：`
     ---   
 
@@ -172,7 +175,7 @@ This is a normal paragraph.
 
     - - - -   
 `效果：`
-  
+ 
 ---   
 
 * * *  
