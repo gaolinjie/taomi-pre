@@ -85,7 +85,8 @@ Header 2
         With multiple paragraphs.
 
     *   Bar  
-`效果：`   
+`效果：`
+   
 * A list item.  
 
   With multiple paragraphs.  
@@ -102,7 +103,8 @@ Header 2
             * BELITTLER
         3. burper
     *   Cunning  
-`效果：`  
+`效果：`
+  
 *   Abacus
     * answer
 *   Bubbles
