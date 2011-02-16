@@ -86,11 +86,11 @@ Header 2
 
     *   Bar  
 `效果：`  
-*   A list item.
+* A list item.
 
-    With multiple paragraphs.
+  With multiple paragraphs.
 
-*   Bar  
+* Bar  
   
 #####3.你可以嵌套上述两种方式  
 `代码：`
