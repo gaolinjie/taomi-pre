@@ -22,7 +22,8 @@ FORMS    +=
 OTHER_FILES += \
     main.qml \
     images/background.png \
-    images/closebutton.png
+    images/closebutton.png \
+    qmls/CategoryModel.qml
 
 RESOURCES += \
     resources.qrc

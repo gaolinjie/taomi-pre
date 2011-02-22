@@ -3,5 +3,6 @@
         <file>images/background.png</file>
         <file>main.qml</file>
         <file>images/closebutton.png</file>
+        <file>qmls/CategoryModel.qml</file>
     </qresource>
 </RCC>
