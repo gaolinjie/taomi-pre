@@ -1,11 +1,19 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
+#include <QtDeclarative/QDeclarativeView>
+#include <QObject>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+
+    QDeclarativeView view;
+    view.setSource(QUrl("qrc:/main.qml"));
+
+    QObject *object = (QObject*)view.rootObject();
+    QObject::connect(object, SIGNAL(close()), &a, SLOT(quit()));
+
+    view.showFullScreen();
 
     return a.exec();
 }
+

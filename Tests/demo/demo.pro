@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += core gui declarative
 
 TARGET = demo
 TEMPLATE = app
@@ -12,9 +13,16 @@ target.path=/usr/local/bin
 INSTALLS=target
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES += main.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  +=
 
-FORMS    += mainwindow.ui
+FORMS    +=
+
+OTHER_FILES += \
+    main.qml \
+    images/background.png \
+    images/closebutton.png
+
+RESOURCES += \
+    resources.qrc
