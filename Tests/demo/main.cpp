@@ -9,9 +9,6 @@ int main(int argc, char *argv[])
     QDeclarativeView view;
     view.setSource(QUrl("qrc:/main.qml"));
 
-    QObject *object = (QObject*)view.rootObject();
-    QObject::connect(object, SIGNAL(close()), &a, SLOT(quit()));
-
     view.showFullScreen();
 
     return a.exec();

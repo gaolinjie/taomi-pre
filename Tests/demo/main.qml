@@ -2,8 +2,6 @@ import Qt 4.7
 import "qmls"
 
 Rectangle {
-    signal close()
-
     id: screen
     width: 1024
     height: 600
@@ -14,17 +12,6 @@ Rectangle {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         anchors.centerIn: parent
-    }
-
-    Image {
-        id: colosebutton
-        source: "images/closebutton.png"
-        x: 992 // 绝对偏移，最好改为相对值
-
-        MouseArea {
-        anchors.fill: parent
-        onClicked: close();
-        }
     }
 
     Component {
@@ -41,10 +28,9 @@ Rectangle {
 
                Rectangle {
                    width: 310; height: 600
-                   color: "#2f2d3c"
+                   color: "black"
                    opacity: 0.6
-                   border.color: "#3d5a81"
-                   border.width: 2
+                   border.color: "white"
 
                    Rectangle {
                        width: 310; height: 40
