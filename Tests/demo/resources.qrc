@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/background.png</file>
         <file>main.qml</file>
         <file>qmls/CategoryModel.qml</file>
+        <file>qmls/ItemModel.qml</file>
+        <file>images/shadow.png</file>
+        <file>images/light_shadow.png</file>
     </qresource>
 </RCC>

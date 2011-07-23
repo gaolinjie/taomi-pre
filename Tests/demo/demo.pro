@@ -21,8 +21,17 @@ FORMS    +=
 
 OTHER_FILES += \
     main.qml \
-    images/background.png \
-    qmls/CategoryModel.qml
+    qmls/CategoryModel.qml \
+    images/8.jpg \
+    images/7.jpg \
+    images/6.jpg \
+    images/5.jpg \
+    images/4.jpg \
+    images/3.jpg \
+    images/2.jpg \
+    qmls/ItemModel.qml \
+    images/shadow.png \
+    images/light_shadow.png
 
 RESOURCES += \
     resources.qrc
