@@ -29,7 +29,7 @@ ListModel {
                     }
                 } else {
                     // 仅执行一次，用于向数据库中插入菜式数据
-   /*                itemModel.append({"iid": 1,
+ /*                  itemModel.append({"iid": 1,
                                           "item": 'AlmondCookies',
                                           "ipic": 'file:///home/gao/taomi/Tests/demo/images/AlmondCookies.jpg',
                                           "iprice": 18.0,
@@ -186,7 +186,7 @@ ListModel {
 
     function saveItemData() {
         // 仅执行一次，用于向数据库中写入菜式数据
- /*       var db = openDatabaseSync("DemoDB", "1.0", "Demo Model SQL", 50000);
+/*        var db = openDatabaseSync("DemoDB", "1.0", "Demo Model SQL", 50000);
         db.transaction(
             function(tx) {
                 tx.executeSql('DROP TABLE Items');

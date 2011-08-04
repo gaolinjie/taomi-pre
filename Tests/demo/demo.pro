@@ -29,7 +29,6 @@ OTHER_FILES += \
     images/4.jpg \
     images/3.jpg \
     images/2.jpg \
-    qmls/ItemModel.qml \
     images/shadow.png \
     qmls/CategoryDelegate.qml \
     qmls/item/ItemModel.qml \
