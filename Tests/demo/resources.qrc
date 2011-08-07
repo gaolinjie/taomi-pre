@@ -8,5 +8,7 @@
         <file>qmls/item/images/light_shadow.png</file>
         <file>qmls/item/images/shadow.png</file>
         <file>qmls/item/images/status_bar.png</file>
+        <file>qmls/item/images/accepted.png</file>
+        <file>qmls/item/images/add.png</file>
     </qresource>
 </RCC>

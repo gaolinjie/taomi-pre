@@ -17,7 +17,7 @@ Component {
             Rectangle {
                 id: titleBar
                 width: 310; height: 40
-                z: 2
+                z: 3
                 color: "black"
                 gradient: Gradient {
                     GradientStop { position: 0.0;

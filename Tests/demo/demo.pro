@@ -35,7 +35,9 @@ OTHER_FILES += \
     qmls/item/ItemDelegate.qml \
     qmls/item/images/status_bar.png \
     qmls/item/images/shadow.png \
-    qmls/item/images/light_shadow.png
+    qmls/item/images/light_shadow.png \
+    qmls/item/images/add.png \
+    qmls/item/images/accepted.png
 
 RESOURCES += \
     resources.qrc

@@ -5,9 +5,13 @@ import QtQuick 1.0
 Component {
     id: itemDelegate
 
+
+
     Item {
        id: itemRow
        width: 310; height: 200
+
+
 
        Row {
            id: foodItem
@@ -50,9 +54,76 @@ Component {
                 anchors.centerIn: parent
                 state: 'list'
 
+                Rectangle {
+                    id: detail
+                    x: pic.x + 55
+                    y: pic.y + 75
+                    width: 350; height: 100
+                    radius: 10
+  //                  z: 3
+                    color: "#3b5998"
+                    opacity: 0.8
+                    visible: false
+
+                    Text {
+                        x: pic.x + 20
+                        y: pic.y + 30
+                        text: item
+                        font.pointSize: 22
+                        color: "white"
+//                       font.bold: true
+                        smooth: true
+                        font.family: "Monospace"
+                        font.bold: true
+                    }
+
+                    Text {
+                        x: pic.x + 20
+                        y: pic.y + 70
+                        text: "RMB: " + iprice + " 元/例"
+                        font.pointSize: 12
+                        color: "white"
+//                        font.bold: true
+                        smooth: true
+                    }
+
+                }
+
+                Image {
+                    id: add
+                    source: "images/add.png"
+                    smooth: true
+                    x: pic.x + 950
+                    y: pic.y + 528
+                    visible: false
+                    opacity: 0.7
+
+
+
+                }
+
+                MouseArea {
+                    id: mouse
+                    anchors.fill: add
+                    onClicked: {accepted.visible =true}
+                    z: 5
+                }
+
+                Image {
+                    id: accepted
+                    source: "images/accepted.png"
+                    smooth: true
+                    x: pic.x + 950
+                    y: pic.y + 528
+                    visible: false
+                    opacity: 0.7
+
+                }
+
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
+                    z: 4
                     onClicked: {
                         if (pic.state == 'list') {
                             pic.state = 'popup'
@@ -68,12 +139,18 @@ Component {
                         ParentChange { target: pic; parent: foodItem}
                         PropertyChanges { target: pic; width: 288; height: 160;
                                           sourceSize.width: 288; sourceSize.height: 160}
+                        PropertyChanges { target: detail; visible: false }
+                        PropertyChanges { target: add; visible: false }
+                        PropertyChanges { target: cancel; visible: false }
                     },
                     State {
                         name: 'popup'
                         ParentChange { target: pic; parent: mainView}
                         PropertyChanges { target: pic; width: 1024; height: 600;
                                           sourceSize.width: 820; sourceSize.height: 547 }
+                        PropertyChanges { target: detail; visible: true }
+                        PropertyChanges { target: add; visible: true }
+                        PropertyChanges { target: cancel; visible: true }
                     }
                 ]
 
@@ -83,7 +160,7 @@ Component {
                             NumberAnimation {
                                 target: pic
                                 properties: 'width, height'
-                                duration: 600; easing.type: 'OutBack'
+                                duration: 600; easing.type: 'OutQuart'//OutBack'
                             }
                     },
 
