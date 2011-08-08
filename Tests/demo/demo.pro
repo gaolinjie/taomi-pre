@@ -37,6 +37,7 @@ OTHER_FILES += \
     qmls/item/images/shadow.png \
     qmls/item/images/light_shadow.png \
     qmls/item/images/add.png \
+    qmls/item/images/accept.png \
     qmls/item/images/accepted.png
 
 RESOURCES += \

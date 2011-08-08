@@ -35,12 +35,24 @@ Component {
             }
 
             Text {
+                id:priceText
                 anchors.right: pic.right
                 y: pic.y - 20
                 text: iprice
                 color: "white"
                 font.bold: true
                 smooth: true
+            }
+
+            Image {
+                id: acceptedIcon
+                source: "images/accepted.png"
+                smooth: true
+                anchors.bottom: priceText.bottom
+                anchors.right: priceText.left
+                visible: acceptIcon.accepted
+                sourceSize.width: 24
+                sourceSize.height: 14
             }
 
             Image {
@@ -60,7 +72,6 @@ Component {
                     y: pic.y + 75
                     width: 350; height: 100
                     radius: 10
-  //                  z: 3
                     color: "#3b5998"
                     opacity: 0.8
                     visible: false
@@ -71,7 +82,6 @@ Component {
                         text: item
                         font.pointSize: 22
                         color: "white"
-//                       font.bold: true
                         smooth: true
                         font.family: "Monospace"
                         font.bold: true
@@ -83,45 +93,47 @@ Component {
                         text: "RMB: " + iprice + " 元/例"
                         font.pointSize: 12
                         color: "white"
-//                        font.bold: true
                         smooth: true
                     }
-
                 }
 
                 Image {
-                    id: add
+                    id: addIcon
                     source: "images/add.png"
                     smooth: true
                     x: pic.x + 950
                     y: pic.y + 528
                     visible: false
-                    opacity: 0.7
-
-
-
-                }
-
-                MouseArea {
-                    id: mouse
-                    anchors.fill: add
-                    onClicked: {accepted.visible =true}
-                    z: 5
                 }
 
                 Image {
-                    id: accepted
-                    source: "images/accepted.png"
+                    id: acceptIcon
+                    source: "images/accept.png"
                     smooth: true
                     x: pic.x + 950
                     y: pic.y + 528
                     visible: false
-                    opacity: 0.7
-
+                    property bool accepted : false
                 }
 
                 MouseArea {
-                    id: mouseArea
+                    id: acceptMouse
+                    z: 5
+                    anchors.fill: acceptIcon
+                    onClicked: {
+                        if (acceptIcon.accepted) {
+                            addIcon.visible = true;
+                            acceptIcon.visible = false;
+                        } else {
+                            addIcon.visible = false;
+                            acceptIcon.visible = true;
+                        }
+                        acceptIcon.accepted = !acceptIcon.accepted;
+                    }
+                }
+
+                MouseArea {
+                    id: picMouse
                     anchors.fill: parent
                     z: 4
                     onClicked: {
@@ -140,8 +152,7 @@ Component {
                         PropertyChanges { target: pic; width: 288; height: 160;
                                           sourceSize.width: 288; sourceSize.height: 160}
                         PropertyChanges { target: detail; visible: false }
-                        PropertyChanges { target: add; visible: false }
-                        PropertyChanges { target: cancel; visible: false }
+                        PropertyChanges { target: addIcon; visible: false }
                     },
                     State {
                         name: 'popup'
@@ -149,8 +160,7 @@ Component {
                         PropertyChanges { target: pic; width: 1024; height: 600;
                                           sourceSize.width: 820; sourceSize.height: 547 }
                         PropertyChanges { target: detail; visible: true }
-                        PropertyChanges { target: add; visible: true }
-                        PropertyChanges { target: cancel; visible: true }
+                        PropertyChanges { target: addIcon; visible: true}
                     }
                 ]
 
