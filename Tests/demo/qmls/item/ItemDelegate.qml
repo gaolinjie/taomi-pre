@@ -32,6 +32,7 @@ Component {
                 color: "white"
                 font.bold: true
                 smooth: true
+  //              font.family: "Times New Roman"
             }
 
             Text {
@@ -42,6 +43,7 @@ Component {
                 color: "white"
                 font.bold: true
                 smooth: true
+ //               font.family: "Times New Roman"
             }
 
             Image {
@@ -72,9 +74,18 @@ Component {
                     y: pic.y + 75
                     width: 350; height: 100
                     radius: 10
-                    color: "#3b5998"
+                    color: "#222"//"#3b5998"
                     opacity: 0.8
                     visible: false
+
+                    Image {
+                        id: rect
+                        source: "images/rect.png"
+                        anchors.fill: parent
+                        smooth: true
+                        x: 0
+                        y: 0
+                    }
 
                     Text {
                         x: pic.x + 20
@@ -83,7 +94,7 @@ Component {
                         font.pointSize: 22
                         color: "white"
                         smooth: true
-                        font.family: "Monospace"
+                        font.family: "Times New Roman"
                         font.bold: true
                     }
 

@@ -38,7 +38,10 @@ OTHER_FILES += \
     qmls/item/images/light_shadow.png \
     qmls/item/images/add.png \
     qmls/item/images/accept.png \
-    qmls/item/images/accepted.png
+    qmls/item/images/accepted.png \
+    qmls/item/images/rect.png \
+    images/switchbutton.png \
+    images/stripes.png
 
 RESOURCES += \
     resources.qrc

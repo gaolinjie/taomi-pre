@@ -11,5 +11,8 @@
         <file>qmls/item/images/add.png</file>
         <file>qmls/item/images/accept.png</file>
         <file>qmls/item/images/accepted.png</file>
+        <file>qmls/item/images/rect.png</file>
+        <file>images/switchbutton.png</file>
+        <file>images/stripes.png</file>
     </qresource>
 </RCC>

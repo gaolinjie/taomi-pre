@@ -30,6 +30,8 @@ Component {
                     anchors.centerIn: parent
                     text: category
                     color: "white"
+                    font.bold: true
+                    smooth: true
                 }
             }
 
