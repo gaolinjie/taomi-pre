@@ -1,18 +1,3 @@
 <RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>qmls/CategoryModel.qml</file>
-        <file>qmls/CategoryDelegate.qml</file>
-        <file>qmls/item/ItemDelegate.qml</file>
-        <file>qmls/item/ItemModel.qml</file>
-        <file>qmls/item/images/light_shadow.png</file>
-        <file>qmls/item/images/shadow.png</file>
-        <file>qmls/item/images/status_bar.png</file>
-        <file>qmls/item/images/add.png</file>
-        <file>qmls/item/images/accept.png</file>
-        <file>qmls/item/images/accepted.png</file>
-        <file>qmls/item/images/rect.png</file>
-        <file>images/switchbutton.png</file>
-        <file>images/stripes.png</file>
-    </qresource>
+    <qresource prefix="/"/>
 </RCC>

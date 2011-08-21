@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QDeclarativeView view;
-    view.setSource(QUrl("qrc:/main.qml"));
+    view.setSource(QUrl("file:///home/gao/taomi/Tests/demo/ui.qml"));
 
 //  view.showFullScreen();
     view.show();

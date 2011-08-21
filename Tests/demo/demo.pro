@@ -20,28 +20,13 @@ HEADERS  +=
 FORMS    +=
 
 OTHER_FILES += \
-    main.qml \
-    qmls/CategoryModel.qml \
     images/8.jpg \
     images/7.jpg \
     images/6.jpg \
     images/5.jpg \
     images/4.jpg \
     images/3.jpg \
-    images/2.jpg \
-    images/shadow.png \
-    qmls/CategoryDelegate.qml \
-    qmls/item/ItemModel.qml \
-    qmls/item/ItemDelegate.qml \
-    qmls/item/images/status_bar.png \
-    qmls/item/images/shadow.png \
-    qmls/item/images/light_shadow.png \
-    qmls/item/images/add.png \
-    qmls/item/images/accept.png \
-    qmls/item/images/accepted.png \
-    qmls/item/images/rect.png \
-    images/switchbutton.png \
-    images/stripes.png
+    images/2.jpg
 
 RESOURCES += \
     resources.qrc
