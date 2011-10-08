@@ -7,31 +7,31 @@ Item {
     id: screen; width: 1024; height: 600
     property bool inSelectedView : false
 
-    // Status Bar
-    //
+    // Top Bar
     Item {
-        id: statusBar
+        id: topBar
         width: parent.width
-        height: statusBarImage.height
+        height: topBarImage.height
         z: 2
 
         Image {
-            id: statusBarImage
-            source: "file:///home/gao/taomi/Tests/demo/icons/status_bar.png"
+            id: topBarImage
+            source: "file:///home/gao/taomi/Tests/demo/icons/topbar.png"
         }
     }
 
     // Main View
-    //
     Item {
         id: mainView
         width: parent.width
-        anchors.top: statusBar.bottom; anchors.bottom: parent.bottom
+        anchors.top: topBar.bottom; anchors.bottom: parent.bottom
         z: 1
 
         Image {
             id: backgroundImage
             source: "file:///home/gao/taomi/Tests/demo/images/background.png"
+            sourceSize.width: 1024
+            sourceSize.height: 600
         }
 
         // 菜类列的ListView
@@ -45,65 +45,212 @@ Item {
         }
     }
 
-    // Switch Button
-    //
+    // Bottom Bar
     Item {
-        id: switchButton
-        x: 987
-        y: 270
-        width: switchButtonImage.width
-        height: switchButtonImage.height
-        z: 3
+        id: bottomlBar
+        width: 1024; height: 40
+        anchors.right: parent.right; anchors.bottom: parent.bottom
+        x: 0; z: 1
+        Rectangle{
+            width: 1024
+            height: 40
+            color: "black"
+            opacity: 0.8
+        }
 
         Image {
-            id: switchButtonImage
-            source: "file:///home/gao/taomi/Tests/demo/icons/switchbutton.png"
-        }
-    }
+            id: heartButton
+            x: 378
+            anchors.verticalCenter: parent.verticalCenter
+            source: "file:///home/gao/taomi/Tests/demo/icons/heart.png"
+            sourceSize.width: 30
+            sourceSize.height: 30
 
-    MouseArea {
-        id: switchMouse
-        anchors.fill: switchButton
-        z: 4
-        onClicked: {
-            if (screen.inSelectedView == true) {
-                screen.inSelectedView = false
-            } else {
-                screen.inSelectedView = true
+            Text {
+                text: "喜\n欢"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: heartButton.right
+                color: "white"
+                font.pointSize: 7
+                font.bold: true
+            }
+        }
+
+        Image {
+            id: shareButton
+            x: 433
+            anchors.verticalCenter: parent.verticalCenter
+            source: "file:///home/gao/taomi/Tests/demo/icons/share.png"
+            sourceSize.width: 32
+            sourceSize.height: 32
+
+            Text {
+                text: "分\n享"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: shareButton.right
+                color: "white"
+                font.pointSize: 7
+                font.bold: true
+            }
+        }
+
+        Image {
+            id: flagButton
+            x: 490
+            anchors.verticalCenter: parent.verticalCenter
+            source: "file:///home/gao/taomi/Tests/demo/icons/flag.png"
+            sourceSize.width: 32
+            sourceSize.height: 32
+
+            Text {
+                text: "已\n选"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: flagButton.right
+                color: "white"
+                font.pointSize: 7
+                font.bold: true
+            }
+
+            MouseArea {
+                id: selectedMouse
+                anchors.fill: parent
+                z: 4
+                onClicked: {
+                    if (screen.inSelectedView == true) {
+                        screen.inSelectedView = false
+                    } else {
+                        screen.inSelectedView = true
+                        bottomlBar.visible = false
+                        selectedViewBar.visible = true
+                    }
+                }
+            }
+        }
+
+        Image {
+            id: settingsButton
+            x: 543
+            anchors.verticalCenter: parent.verticalCenter
+            source: "file:///home/gao/taomi/Tests/demo/icons/settings.png"
+            sourceSize.width: 38
+            sourceSize.height: 38
+
+            Text {
+                text: "设\n置"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: settingsButton.right
+                color: "white"
+                font.pointSize: 7
+                font.bold: true
+            }
+        }
+
+        Image {
+            id: searchButton
+            x: 598
+            anchors.verticalCenter: parent.verticalCenter
+            source: "file:///home/gao/taomi/Tests/demo/icons/search.png"
+            sourceSize.width: 36
+            sourceSize.height: 36
+
+            Text {
+                text: "搜\n索"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: searchButton.right
+                color: "white"
+                font.pointSize: 7
+                font.bold: true
             }
         }
     }
 
+    // SelectedView
     Item {
         id: selectedView
         width: parent.width
-        anchors.top: statusBar.bottom; anchors.bottom: parent.bottom
+        anchors.top: topBar.bottom; anchors.bottom: parent.bottom
         anchors.left: mainView.right
         z: 1
 
-        Rectangle {
-            width: parent.width
-            height: parent.height
-            color: "#343434";
+        Image {
+            id: selectedBgImg
+            source: "file:///home/gao/taomi/Tests/demo/images/background.png"
+            sourceSize.width: 1024
+            sourceSize.height: 600
+        }
 
-            Image {
-                source: "file:///home/gao/taomi/Tests/demo/icons/stripes.png"
-                fillMode: Image.Tile
+        Image {
+            id: backButton
+            x: 20
+            y: 40
+            source: "file:///home/gao/taomi/Tests/demo/icons/back.png"
+            sourceSize.width: 30
+            sourceSize.height: 30
+
+            MouseArea {
+                id: backMouse
                 anchors.fill: parent
-                opacity: 0.3
+                z: 4
+                onClicked: {
+                    if (screen.inSelectedView == true) {
+                        screen.inSelectedView = false
+                        selectedViewBar.visible = false
+                        bottomlBar.visible = true
+                    } else {
+                        screen.inSelectedView = true
+                    }
+                }
             }
+        }
+
+        Text {
+            x: 80
+            y: 40
+            text: "菜 单"
+            font.pointSize: 22
+            color: "white"
+            smooth: true
+            font.family: "Times New Roman"
+            anchors.verticalCenter: backButton.verticalCenter
         }
 
         GridView {
             id: selectedGridView
-            anchors.centerIn: parent
+            x:80
+            y:100
             model: selectedModel
             delegate: selectedDelegate
             cacheBuffer: 100
-            cellWidth: 341
-            cellHeight: 200
+            cellWidth: 200
+            cellHeight: 116
+            width: 800
+            height: 400
+            flow: GridView.TopToBottom
+        }
+    }
+
+    // SelectedView Bar
+    Item {
+        id: selectedViewBar
+        width: 1024; height: 40
+        anchors.right: parent.right; anchors.bottom: parent.bottom
+        x: 0; z: 1
+        visible: false
+        Rectangle{
             width: 1024
-            height: 600
+            height: 40
+            color: "black"
+            opacity: 0.8
+        }
+
+        Image {
+            id: sendButton
+            x: 50
+ //           anchors.verticalCenter: parent.verticalCenter
+            anchors.centerIn: parent
+            source: "file:///home/gao/taomi/Tests/demo/icons/send.png"
+            sourceSize.width: 30
+            sourceSize.height: 30
         }
     }
 
@@ -112,13 +259,11 @@ Item {
             name: "MainView"; when: screen.inSelectedView == false
             PropertyChanges { target: mainView; x: 0 }
             PropertyChanges { target: selectedView; x: parent.width }
-            PropertyChanges { target: switchButton; x: 988 }
         },
         State {
             name: "SelectedView"; when: screen.inSelectedView == true
             PropertyChanges { target: mainView; x: -parent.width }
             PropertyChanges { target: selectedView; x: 0 }
-            PropertyChanges { target: switchButton; x: -37 }
         }
     ]
 
@@ -128,14 +273,8 @@ Item {
                 NumberAnimation {
                     target: mainView
                     properties: 'x'
-                    duration: 900
-                    easing.type: Easing.OutQuart
-                }
-                NumberAnimation {
-                    target: switchButton
-                    properties: 'x'
-                    duration: 900
-                    easing.type: Easing.OutQuart
+                    duration: 200
+                    easing.type: Easing.Linear
                 }
         },
 
@@ -144,14 +283,8 @@ Item {
                 NumberAnimation {
                     target: mainView
                     properties: 'x'
-                    duration: 900
-                    easing.type: Easing.OutQuart
-                }
-                NumberAnimation {
-                    target: switchButton
-                    properties: 'x'
-                    duration: 900
-                    easing.type: Easing.OutQuart
+                    duration: 200
+                    easing.type: Easing.Linear
                 }
         }
     ]
@@ -233,8 +366,6 @@ Item {
                        id: itemRow
                        width: 310; height: 200
 
-
-
                        Row {
                             id: foodItem
                             anchors.verticalCenter: parent.verticalCenter
@@ -272,10 +403,11 @@ Item {
                                 smooth: true
                                 anchors.bottom: priceText.bottom
                                 anchors.right: priceText.left
-                                visible: acceptIcon.accepted
+                                visible: acceptButton.accepted
                                 sourceSize.width: 24
                                 sourceSize.height: 14
                             }
+
 
                             Image {
                                 id: pic
@@ -288,24 +420,13 @@ Item {
                                 anchors.centerIn: parent
                                 state: 'list'
 
-                                Rectangle {
+  /*                              Rectangle {
                                     id: detail
-                                    x: pic.x + 55
+                                    x: pic.x
                                     y: pic.y + 75
-                                    width: 350; height: 100
-                                    radius: 10
-                                    color: "#222"//"#3b5998"
-                                    opacity: 0.8
+                                    width: 400; height: 120
+                                    color: "#409ca4"
                                     visible: false
-
-                                    Image {
-                                        id: rect
-                                        source: "file:///home/gao/taomi/Tests/demo/icons/rect.png"
-                                        anchors.fill: parent
-                                        smooth: true
-                                        x: 0
-                                        y: 0
-                                    }
 
                                     Text {
                                         x: pic.x + 20
@@ -314,8 +435,7 @@ Item {
                                         font.pointSize: 22
                                         color: "white"
                                         smooth: true
-                                        font.family: "Times New Roman"
-                                        font.bold: true
+                                        font.family: "SegoeWPN-Semilight"
                                     }
 
                                     Text {
@@ -328,59 +448,75 @@ Item {
                                     }
                                 }
 
-                                Image {
-                                    id: addIcon
-                                    source: "file:///home/gao/taomi/Tests/demo/icons/add.png"
-                                    smooth: true
-                                    x: pic.x + 950
-                                    y: pic.y + 528
+                                // DetailView Bar
+                                Item {
+                                    id: detailViewBar
+                                    width: 1024; height: 40
+                                    anchors.right: parent.right; anchors.bottom: parent.bottom
+                                    x: 0; z: 5
                                     visible: false
-                                }
-
-                                Image {
-                                    id: acceptIcon
-                                    source: "file:///home/gao/taomi/Tests/demo/icons/accept.png"
-                                    smooth: true
-                                    x: pic.x + 950
-                                    y: pic.y + 528
-                                    visible: false
-                                    property bool accepted : false
-                                }
-
-                                MouseArea {
-                                    id: acceptMouse
-                                    z: 5
-                                    anchors.fill: acceptIcon
-
-                                    // 删除选中的菜式
-                                    function removeSelectedItem() {
-                                        var i = 0;
-                                        while (selectedModel.get(i).item != item)
-                                        {
-                                            i++;
-                                        }
-                                        selectedModel.remove(i);
+                                    Rectangle{
+                                        width: 1024
+                                        height: 40
+                                        color: "black"
+                                        opacity: 0.8
                                     }
 
-                                    onClicked: {
-                                        if (acceptIcon.accepted) {
-                                            addIcon.visible = true;
-                                            acceptIcon.visible = false;
-                                            removeSelectedItem();
-                                        } else {
-                                            addIcon.visible = false;
-                                            acceptIcon.visible = true;
-                                            selectedModel.append({"iid": iid,
-                                                                 "item": item,
-                                                                 "ipic": ipic,
-                                                                 "iprice": iprice,
-                                                                 "iorder": iorder,
-                                                                 "icid": icid});
+                                    Image {
+                                        id: addButton
+                                        x: 50
+                                        anchors.centerIn: parent
+                                        source: "file:///home/gao/taomi/Tests/demo/icons/add.png"
+                                        sourceSize.width: 30
+                                        sourceSize.height: 30
+
+                                        MouseArea {
+                                            id: acceptMouse
+                                            anchors.fill: parent
+                                            z: 5
+
+                                            // 删除选中的菜式
+                                            function removeSelectedItem() {
+                                                var i = 0;
+                                                while (selectedModel.get(i).item != item)
+                                                {
+                                                    i++;
+                                                }
+                                                selectedModel.remove(i);
+                                            }
+
+                                            onClicked: {
+                                                if (acceptButton.accepted) {
+                                                    addButton.visible = true;
+                                                    acceptButton.visible = false;
+                                                    removeSelectedItem();
+                                                } else {
+                                                    addButton.visible = false;
+                                                    acceptButton.visible = true;
+                                                    selectedModel.append({"iid": iid,
+                                                                         "item": item,
+                                                                         "ipic": ipic,
+                                                                         "iprice": iprice,
+                                                                         "iorder": iorder,
+                                                                         "icid": icid});
+                                                }
+                                                acceptButton.accepted = !acceptButton.accepted;
+                                            }
                                         }
-                                        acceptIcon.accepted = !acceptIcon.accepted;
+                                    }
+
+                                    Image {
+                                        id: acceptButton
+                                        x: 50
+                                        anchors.centerIn: parent
+                                        source: "file:///home/gao/taomi/Tests/demo/icons/accept.png"
+                                        sourceSize.width: 30
+                                        sourceSize.height: 30
+                                        property bool accepted : false
+                                        visible: false
                                     }
                                 }
-
+*/
                                 MouseArea {
                                     id: picMouse
                                     anchors.fill: parent
@@ -388,8 +524,14 @@ Item {
                                     onClicked: {
                                         if (pic.state == 'list') {
                                             pic.state = 'popup'
+                                            listView.visible = false
+        //                                    detailViewBar.visible = true
+                                            bottomlBar.visible = false
                                         } else {
                                             pic.state = 'list'
+                                            listView.visible = true
+          //                                  detailViewBar.visible = false
+                                            bottomlBar.visible = true
                                         }
                                     }
                                 }
@@ -401,19 +543,17 @@ Item {
                                         PropertyChanges { target: pic; width: 288; height: 160;
                                                           sourceSize.width: 288; sourceSize.height: 160}
                                         PropertyChanges { target: detail; visible: false }
-                                        PropertyChanges { target: addIcon; visible: false }
                                     },
                                     State {
                                         name: 'popup'
                                         ParentChange { target: pic; parent: mainView}
-                                        PropertyChanges { target: pic; width: 1024; height: 600;
+                                        PropertyChanges { target: pic; width: 1024; height: 575;
                                                           sourceSize.width: 820; sourceSize.height: 547 }
                                         PropertyChanges { target: detail; visible: true }
-                                        PropertyChanges { target: addIcon; visible: true}
                                     }
                                 ]
 
-                                transitions: [
+           /*                     transitions: [
                                     Transition {
                                         from: 'list'; to: 'popup'
                                             NumberAnimation {
@@ -431,7 +571,7 @@ Item {
                                                 duration: 600; easing.type: 'OutQuart'
                                             }
                                     }
-                                ]
+                                ]*/
                             }
                        }
                     }
@@ -464,7 +604,7 @@ Item {
                                                               "ipic": myItem.ipic,
                                                               "iprice": myItem.iprice,
                                                               "iorder": myItem.iorder,
-                                                              "icid": myItem.icid});
+                                                              "icid": myItem.icid,});
                                         index++;
                                     }
                                 } else {
@@ -710,25 +850,26 @@ Item {
     Component {
         id: selectedDelegate
         Item {
-            width: 341
-            height: 200
+            width: 200
+            height: 116
 
             Image {
                 id: selectedPic
                 source: ipic
                 anchors.centerIn: parent
-                width: 228
-                height: 133
+                sourceSize.width: 192
+                sourceSize.height: 108
+                smooth: true
             }
 
             Image {
+                id: cancelIcon
                 source: "file:///home/gao/taomi/Tests/demo/icons/cross.png"
                 anchors.horizontalCenter: selectedPic.right
                 anchors.verticalCenter: selectedPic.top
                 sourceSize.width: 40
                 sourceSize.height: 40
                 opacity: 0.8
-
 
 
                 MouseArea {
