@@ -34,6 +34,110 @@ Item {
             sourceSize.height: 600
         }
 
+        // Detail Content
+        Rectangle {
+            id: detail
+            y: -25
+            z: 2
+            width: 1024; height: 60
+            color: "black"
+            opacity: 0.8
+            visible: false
+            property string iid: "null"
+            property string name: "null"
+            property string picture: "null"
+            property string price: "null"
+            property string order: "null"
+            property string cid: "null"
+        }
+
+        Text {
+            x: detail.x + 10
+            y: detail.y + 10
+            z: 2
+            text: detail.name
+            font.pointSize: 22
+            color: "white"
+            smooth: true
+            font.family: "SegoeWPN-Semilight"
+            visible: detail.visible
+        }
+
+        Text {
+            x: detail.x + 900
+            y: detail.y + 23
+            z: 2
+            text: "RMB: " + detail.price + " 元/例"
+            font.pointSize: 12
+            color: "white"
+            smooth: true
+            visible: detail.visible
+        }
+
+        // DetailView Bar
+        Item {
+            id: detailViewBar
+            width: 1024; height: 40
+            anchors.right: parent.right; anchors.bottom: parent.bottom
+            x: 0; z: 5
+            visible: false
+            Rectangle{
+                width: 1024
+                height: 40
+                color: "black"
+                opacity: 0.8
+            }
+
+            Image {
+                id: addButton
+                x: 50
+                anchors.centerIn: parent
+                source: "file:///home/gao/taomi/Tests/demo/icons/add.png"
+                sourceSize.width: 30
+                sourceSize.height: 30
+
+                MouseArea {
+                    id: acceptMouse
+                    anchors.fill: parent
+                    z: 5
+
+                    onClicked: {
+                        if(selectedModel.count != 0)
+                        {
+                            for (var i = 0; i < selectedModel.count; i++)
+                            {
+                                if (selectedModel.get(i).item == detail.name)
+                                {
+                                    selectedModel.get(i).num++;
+                                    return;
+                                }
+                            }
+                            if (i == selectedModel.count)
+                            {
+                                selectedModel.append({"iid": detail.iid,
+                                                     "item": detail.name,
+                                                     "ipic": detail.picture,
+                                                     "iprice": detail.price,
+                                                     "iorder": detail.order,
+                                                     "icid": detail.cid,
+                                                     "num": 1});
+                            }
+                        }
+                        else
+                        {
+                            selectedModel.append({"iid": detail.iid,
+                                                 "item": detail.name,
+                                                 "ipic": detail.picture,
+                                                 "iprice": detail.price,
+                                                 "iorder": detail.order,
+                                                 "icid": detail.cid,
+                                                 "num": 1});
+                        }
+                    }
+                }
+            }
+        }
+
         // 菜类列的ListView
         //
         ListView {
@@ -123,6 +227,8 @@ Item {
                         bottomlBar.visible = false
                         selectedViewBar.visible = true
                     }
+
+                    calcTotal();
                 }
             }
         }
@@ -171,6 +277,7 @@ Item {
         anchors.top: topBar.bottom; anchors.bottom: parent.bottom
         anchors.left: mainView.right
         z: 1
+        property string total: ""
 
         Image {
             id: selectedBgImg
@@ -214,17 +321,28 @@ Item {
             anchors.verticalCenter: backButton.verticalCenter
         }
 
+        Text {
+            x: 900
+            y: 50
+            text: "总计: " + selectedView.total + " 元"
+            font.pointSize: 12
+            color: "white"
+            smooth: true
+            font.family: "Times New Roman"
+ //           anchors.verticalCenter: backButton.verticalCenter
+        }
+
         GridView {
             id: selectedGridView
-            x:80
-            y:100
+            x:60
+            y:80
             model: selectedModel
             delegate: selectedDelegate
             cacheBuffer: 100
-            cellWidth: 200
-            cellHeight: 116
+            cellWidth: 240
+            cellHeight: 145
             width: 800
-            height: 400
+            height: 450
             flow: GridView.TopToBottom
         }
     }
@@ -246,7 +364,6 @@ Item {
         Image {
             id: sendButton
             x: 50
- //           anchors.verticalCenter: parent.verticalCenter
             anchors.centerIn: parent
             source: "file:///home/gao/taomi/Tests/demo/icons/send.png"
             sourceSize.width: 30
@@ -398,18 +515,6 @@ Item {
                             }
 
                             Image {
-                                id: acceptedIcon
-                                source: "file:///home/gao/taomi/Tests/demo/icons/accepted.png"
-                                smooth: true
-                                anchors.bottom: priceText.bottom
-                                anchors.right: priceText.left
-                                visible: acceptButton.accepted
-                                sourceSize.width: 24
-                                sourceSize.height: 14
-                            }
-
-
-                            Image {
                                 id: pic
                                 source: ipic
                                 sourceSize.width: 288
@@ -420,103 +525,87 @@ Item {
                                 anchors.centerIn: parent
                                 state: 'list'
 
-  /*                              Rectangle {
-                                    id: detail
-                                    x: pic.x
-                                    y: pic.y + 75
-                                    width: 400; height: 120
-                                    color: "#409ca4"
-                                    visible: false
-
-                                    Text {
-                                        x: pic.x + 20
-                                        y: pic.y + 30
-                                        text: item
-                                        font.pointSize: 22
-                                        color: "white"
-                                        smooth: true
-                                        font.family: "SegoeWPN-Semilight"
-                                    }
-
-                                    Text {
-                                        x: pic.x + 20
-                                        y: pic.y + 70
-                                        text: "RMB: " + iprice + " 元/例"
-                                        font.pointSize: 12
-                                        color: "white"
-                                        smooth: true
-                                    }
+                                Rectangle {
+                                    width: 23; height: 23
+                                    anchors.right: parent.right
+                                    anchors.bottom: parent.bottom
+                                    color: "black"
                                 }
 
-                                // DetailView Bar
-                                Item {
-                                    id: detailViewBar
-                                    width: 1024; height: 40
-                                    anchors.right: parent.right; anchors.bottom: parent.bottom
-                                    x: 0; z: 5
-                                    visible: false
-                                    Rectangle{
-                                        width: 1024
-                                        height: 40
-                                        color: "black"
-                                        opacity: 0.8
+                                Image {
+                                    id: add
+                                    source: "file:///home/gao/taomi/Tests/demo/icons/shopcar.png"
+                                    anchors.right: parent.right
+                                    anchors.bottom: parent.bottom
+                                    z:5
+                                    Text {
+                                        id: nums
+                                        text: "0"
+                                        visible: false
                                     }
 
-                                    Image {
-                                        id: addButton
-                                        x: 50
-                                        anchors.centerIn: parent
-                                        source: "file:///home/gao/taomi/Tests/demo/icons/add.png"
-                                        sourceSize.width: 30
-                                        sourceSize.height: 30
+                                    MouseArea {
+                                        id: acceptMou
+                                        anchors.fill: parent
+                                        z: 5
 
-                                        MouseArea {
-                                            id: acceptMouse
-                                            anchors.fill: parent
-                                            z: 5
-
-                                            // 删除选中的菜式
-                                            function removeSelectedItem() {
-                                                var i = 0;
-                                                while (selectedModel.get(i).item != item)
+                                        onClicked: {
+                                            if(selectedModel.count != 0)
+                                            {
+                                                for (var i = 0; i < selectedModel.count; i++)
                                                 {
-                                                    i++;
+                                                    if (selectedModel.get(i).item == item)
+                                                    {
+                                                        selectedModel.get(i).num++;
+                                                        nums.text = selectedModel.get(i).num;
+                                                        return;
+                                                    }
                                                 }
-                                                selectedModel.remove(i);
-                                            }
-
-                                            onClicked: {
-                                                if (acceptButton.accepted) {
-                                                    addButton.visible = true;
-                                                    acceptButton.visible = false;
-                                                    removeSelectedItem();
-                                                } else {
-                                                    addButton.visible = false;
-                                                    acceptButton.visible = true;
+                                                if (i == selectedModel.count)
+                                                {
                                                     selectedModel.append({"iid": iid,
                                                                          "item": item,
                                                                          "ipic": ipic,
                                                                          "iprice": iprice,
                                                                          "iorder": iorder,
-                                                                         "icid": icid});
+                                                                         "icid": icid,
+                                                                         "num": 1});
+                                                    nums.text = 1;
                                                 }
-                                                acceptButton.accepted = !acceptButton.accepted;
+                                            }
+                                            else
+                                            {
+                                                selectedModel.append({"iid": iid,
+                                                                     "item": item,
+                                                                     "ipic": ipic,
+                                                                     "iprice": iprice,
+                                                                     "iorder": iorder,
+                                                                     "icid": icid,
+                                                                     "num": 1});
+                                                nums.text = 1;
                                             }
                                         }
                                     }
+                                }
 
-                                    Image {
-                                        id: acceptButton
-                                        x: 50
+                                Image {
+                                    id: numsIcon
+                                    source: "file:///home/gao/taomi/Tests/demo/icons/selectednum.png"
+                                    anchors.right: add.left
+                                    anchors.bottom: parent.bottom
+                                    visible: nums.text != "0"
+
+                                    Text {
+                                        id: numText
+                                        text: "已点 " + nums.text + " 份"
                                         anchors.centerIn: parent
-                                        source: "file:///home/gao/taomi/Tests/demo/icons/accept.png"
-                                        sourceSize.width: 30
-                                        sourceSize.height: 30
-                                        property bool accepted : false
-                                        visible: false
+                                        font.pointSize: 10
+                                        color: "white"
+                                        smooth: true
                                     }
                                 }
-*/
+
+
                                 MouseArea {
                                     id: picMouse
                                     anchors.fill: parent
@@ -525,12 +614,20 @@ Item {
                                         if (pic.state == 'list') {
                                             pic.state = 'popup'
                                             listView.visible = false
-        //                                    detailViewBar.visible = true
+                                            detail.visible = true
+                                            detail.iid = iid
+                                            detail.name = item
+                                            detail.picture = ipic
+                                            detail.price = iprice
+                                            detail.order = iorder
+                                            detail.cid = icid
+                                            detailViewBar.visible = true
                                             bottomlBar.visible = false
                                         } else {
                                             pic.state = 'list'
                                             listView.visible = true
-          //                                  detailViewBar.visible = false
+                                            detail.visible = false
+                                            detailViewBar.visible = false
                                             bottomlBar.visible = true
                                         }
                                     }
@@ -543,17 +640,19 @@ Item {
                                         PropertyChanges { target: pic; width: 288; height: 160;
                                                           sourceSize.width: 288; sourceSize.height: 160}
                                         PropertyChanges { target: detail; visible: false }
+                                        PropertyChanges { target: topBar; z: 2 }
                                     },
                                     State {
                                         name: 'popup'
                                         ParentChange { target: pic; parent: mainView}
-                                        PropertyChanges { target: pic; width: 1024; height: 575;
-                                                          sourceSize.width: 820; sourceSize.height: 547 }
+                                        PropertyChanges { target: pic; width: 1024; height: 624;
+                                                          sourceSize.width: 820; sourceSize.height: 547}
                                         PropertyChanges { target: detail; visible: true }
+                                        PropertyChanges { target: topBar; z: 1 }
                                     }
                                 ]
 
-           /*                     transitions: [
+                                transitions: [
                                     Transition {
                                         from: 'list'; to: 'popup'
                                             NumberAnimation {
@@ -571,7 +670,7 @@ Item {
                                                 duration: 600; easing.type: 'OutQuart'
                                             }
                                     }
-                                ]*/
+                                ]
                             }
                        }
                     }
@@ -766,7 +865,7 @@ Item {
 
                     function saveItemData() {
                         // 仅执行一次，用于向数据库中写入菜式数据
-                /*       var db = openDatabaseSync("DemoDB", "1.0", "Demo Model SQL", 50000);
+     /*                  var db = openDatabaseSync("DemoDB", "1.0", "Demo Model SQL", 50000);
                         db.transaction(
                             function(tx) {
                                 tx.executeSql('DROP TABLE Items');
@@ -850,8 +949,10 @@ Item {
     Component {
         id: selectedDelegate
         Item {
-            width: 200
-            height: 116
+            width: 240
+            height: 145
+
+
 
             Image {
                 id: selectedPic
@@ -860,11 +961,26 @@ Item {
                 sourceSize.width: 192
                 sourceSize.height: 108
                 smooth: true
+
+                Image {
+                    id: numIcon
+                    source: "file:///home/gao/taomi/Tests/demo/icons/selectednum.png"
+                    anchors.bottom: parent.bottom
+
+                    Text {
+                        id: numText
+                        text: "已点 " + num + " 份"
+                        anchors.centerIn: parent
+                        font.pointSize: 10
+                        color: "white"
+                        smooth: true
+                    }
+                }
             }
 
             Image {
                 id: cancelIcon
-                source: "file:///home/gao/taomi/Tests/demo/icons/cross.png"
+                source: "file:///home/gao/taomi/Tests/demo/icons/list-delete.png"
                 anchors.horizontalCenter: selectedPic.right
                 anchors.verticalCenter: selectedPic.top
                 sourceSize.width: 40
@@ -889,6 +1005,43 @@ Item {
 
                     onClicked: {
                         removeSelectedItem();
+                        calcTotal();
+                    }
+                }
+            }
+
+            Image {
+                id: addIcon
+                source: "file:///home/gao/taomi/Tests/demo/icons/plus-sign.png"
+                anchors.horizontalCenter: selectedPic.right
+                y: 40
+                sourceSize.width: 20
+                sourceSize.height: 20
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+                        selectedModel.setProperty(index, "num", num+1);
+                        calcTotal();
+                    }
+                }
+            }
+
+
+            Image {
+                id: subIcon
+                source: "file:///home/gao/taomi/Tests/demo/icons/minus-sign.png"
+                anchors.horizontalCenter: selectedPic.right
+                y: 67
+                sourceSize.width: 20
+                sourceSize.height: 20
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        selectedModel.setProperty(index, "num", num-1);
+                        calcTotal();
                     }
                 }
             }
@@ -900,6 +1053,18 @@ Item {
      */
     ListModel {
         id: selectedModel
+    }
+
+    // jisuanzongjia
+    function calcTotal() {
+        var i = 0;
+        var sum = 0;
+        while (i != selectedModel.count)
+        {
+            sum += selectedModel.get(i).iprice * selectedModel.get(i).num;
+            i++;
+        }
+        selectedView.total = sum;
     }
 }
 
