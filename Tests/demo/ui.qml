@@ -5,7 +5,7 @@ import Qt 4.7
  */
 Item {
     id: screen; width: 1024; height: 600
-    property bool inSelectedView : false
+    property string state : "MAIN_VIEW"
 
     // Top Bar
     Item {
@@ -31,7 +31,7 @@ Item {
             id: backgroundImage
             source: "file:///home/gao/taomi/Tests/demo/images/background.png"
             sourceSize.width: 1024
-            sourceSize.height: 600
+            sourceSize.height: 575
         }
 
         // Detail Content
@@ -39,7 +39,7 @@ Item {
             id: detail
             y: -25
             z: 2
-            width: 1024; height: 60
+            width: 1024; height: 40
             color: "black"
             opacity: 0.8
             visible: false
@@ -53,19 +53,19 @@ Item {
 
         Text {
             x: detail.x + 10
-            y: detail.y + 10
+            y: detail.y + 4//+ 10
             z: 2
             text: detail.name
-            font.pointSize: 22
+            font.pointSize: 21
             color: "white"
             smooth: true
-            font.family: "SegoeWPN-Semilight"
+            font.family: "DejaVu Serif"
             visible: detail.visible
         }
 
         Text {
             x: detail.x + 900
-            y: detail.y + 23
+            y: detail.y + 13
             z: 2
             text: "RMB: " + detail.price + " 元/例"
             font.pointSize: 12
@@ -151,7 +151,7 @@ Item {
 
     // Bottom Bar
     Item {
-        id: bottomlBar
+        id: bottomBar
         width: 1024; height: 40
         anchors.right: parent.right; anchors.bottom: parent.bottom
         x: 0; z: 1
@@ -171,12 +171,21 @@ Item {
             sourceSize.height: 30
 
             Text {
-                text: "喜\n欢"
+                text: "语\n言"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: heartButton.right
                 color: "white"
                 font.pointSize: 7
                 font.bold: true
+            }
+
+            MouseArea {
+                id: language_mouse
+                anchors.fill: parent
+                z: 4
+                onClicked: {
+                    language_dialog.visible = true;
+                }
             }
         }
 
@@ -189,12 +198,24 @@ Item {
             sourceSize.height: 32
 
             Text {
-                text: "分\n享"
+                text: "座\n位"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: shareButton.right
                 color: "white"
                 font.pointSize: 7
                 font.bold: true
+            }
+
+            MouseArea {
+                id: seatsMouse
+                anchors.fill: parent
+                z: 4
+                onClicked: {
+                    if (screen.state == "MAIN_VIEW") {
+                        screen.state = "SEATS_VIEW"
+                        bottomBar.visible = false
+                    }
+                }
             }
         }
 
@@ -207,7 +228,7 @@ Item {
             sourceSize.height: 32
 
             Text {
-                text: "已\n选"
+                text: "菜\n单"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: flagButton.right
                 color: "white"
@@ -220,11 +241,9 @@ Item {
                 anchors.fill: parent
                 z: 4
                 onClicked: {
-                    if (screen.inSelectedView == true) {
-                        screen.inSelectedView = false
-                    } else {
-                        screen.inSelectedView = true
-                        bottomlBar.visible = false
+                    if (screen.state == "MAIN_VIEW") {
+                        screen.state = "SELECTED_VIEW"
+                        bottomBar.visible = false
                         selectedViewBar.visible = true
                     }
 
@@ -276,14 +295,14 @@ Item {
         width: parent.width
         anchors.top: topBar.bottom; anchors.bottom: parent.bottom
         anchors.left: mainView.right
-        z: 1
+        z: 0
         property string total: ""
 
         Image {
             id: selectedBgImg
             source: "file:///home/gao/taomi/Tests/demo/images/background.png"
             sourceSize.width: 1024
-            sourceSize.height: 600
+            sourceSize.height: 575
         }
 
         Image {
@@ -299,12 +318,17 @@ Item {
                 anchors.fill: parent
                 z: 4
                 onClicked: {
-                    if (screen.inSelectedView == true) {
-                        screen.inSelectedView = false
+                    if (screen.state == "SELECTED_VIEW") {
+                        screen.state = "MAIN_VIEW"
                         selectedViewBar.visible = false
-                        bottomlBar.visible = true
+                        bottomBar.visible = true
                     } else {
-                        screen.inSelectedView = true
+                      //  screen.inSelectedView = true
+                    }
+
+                    if (dialog.state == 'center') {
+                        dialog.state = 'bottom';
+                        foreground.visible = false
                     }
                 }
             }
@@ -313,11 +337,11 @@ Item {
         Text {
             x: 80
             y: 40
-            text: "菜 单"
+            text: "点 单"
             font.pointSize: 22
             color: "white"
             smooth: true
-            font.family: "Times New Roman"
+            font.family: "DejaVu Serif"
             anchors.verticalCenter: backButton.verticalCenter
         }
 
@@ -328,7 +352,8 @@ Item {
             font.pointSize: 12
             color: "white"
             smooth: true
-            font.family: "Times New Roman"
+            font.family: "DejaVu Serif"
+            font.bold: true
  //           anchors.verticalCenter: backButton.verticalCenter
         }
 
@@ -345,6 +370,15 @@ Item {
             height: 450
             flow: GridView.TopToBottom
         }
+
+        Rectangle {
+            id: foreground
+            width: 1024; height: 575
+            color: "black"
+            anchors.centerIn: parent
+            opacity: 0.7
+            visible: false
+        }
     }
 
     // SelectedView Bar
@@ -352,7 +386,7 @@ Item {
         id: selectedViewBar
         width: 1024; height: 40
         anchors.right: parent.right; anchors.bottom: parent.bottom
-        x: 0; z: 1
+        x: 0; z: 2
         visible: false
         Rectangle{
             width: 1024
@@ -368,19 +402,372 @@ Item {
             source: "file:///home/gao/taomi/Tests/demo/icons/send.png"
             sourceSize.width: 30
             sourceSize.height: 30
+
+            MouseArea {
+                id: sendMouse
+                anchors.fill: parent
+                z: 5
+                onClicked: {
+                    if (dialog.state == 'bottom') {
+                        foreground.visible = true
+                        dialog.state = 'center'
+                    }
+                }
+            }
+        }
+    }
+
+    // SeatsView
+    Item {
+        id: seats_view
+        width: parent.width
+        anchors.top: topBar.bottom; anchors.bottom: parent.bottom
+        anchors.left: mainView.right
+        z: 0
+
+        Image {
+            id: seats_background
+            source: "file:///home/gao/taomi/Tests/demo/images/background.png"
+            sourceSize.width: 1024
+            sourceSize.height: 575
+        }
+
+        Image {
+            id: back_Button
+            x: 20
+            y: 40
+            source: "file:///home/gao/taomi/Tests/demo/icons/back.png"
+            sourceSize.width: 30
+            sourceSize.height: 30
+
+            MouseArea {
+                id: back_Mouse
+                anchors.fill: parent
+                z: 4
+                onClicked: {
+                    if (screen.state == "SEATS_VIEW") {
+                        screen.state = "MAIN_VIEW"
+                        bottomBar.visible = true
+                    } else {
+                      //  screen.inSelectedView = true
+                    }
+                }
+            }
+        }
+
+ /*       Text {
+            x: 80
+            y: 40
+            text: "座 位"
+            font.pointSize: 22
+            color: "white"
+            smooth: true
+            font.family: "DejaVu Serif"
+            anchors.verticalCenter: backButton.verticalCenter
+        }*/
+
+        Image {
+            id: seats_image
+            source: "file:///home/gao/taomi/Tests/demo/icons/seats.png"
+            sourceSize.width: 794
+            sourceSize.height: 543
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 15
+        }
+    }
+
+    // Dialog
+    Item {
+        id: dialog
+        width: 335; height: 154
+        anchors.horizontalCenter: selectedView.horizontalCenter
+        y: 600
+        z: 1
+        state: 'bottom'
+
+        Image {
+            id: dialog_img
+            source: "file:///home/gao/taomi/Tests/demo/icons/dialog.png"
+            anchors.fill: parent
+
+            Text {
+                id: prompt_text
+                text: "您所点的菜单将被直接发送到厨房！"
+                font.pixelSize: 18
+                color: "white"
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 60
+            }
+
+            Image {
+                id: dialog_ok
+                source: "file:///home/gao/taomi/Tests/demo/icons/dialog_ok.png"
+                x: 63; y: 116
+
+                Text {
+                    id: ok_text
+                    text: "确 定"
+                    font.pixelSize: 14
+                    color: "white"
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    id: ok_mouse
+                    anchors.fill: parent
+                    z: 5
+                    onClicked: {
+                        if (dialog.state == 'center') {
+                            dialog.state = 'bottom';
+                            foreground.visible = false
+                        }
+                    }
+                }
+            }
+
+            Image {
+                id: dialog_cancel
+                source: "file:///home/gao/taomi/Tests/demo/icons/dialog_cancel.png"
+                x: 169; y: 116
+
+                Text {
+                    id: cancel_text
+                    text: "取 消"
+                    font.pixelSize: 14
+                    color: "white"
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    id: cancel_mouse
+                    anchors.fill: parent
+                    z: 5
+                    onClicked: {
+                        if (dialog.state == 'center') {
+                            dialog.state = 'bottom';
+                            foreground.visible = false
+                        }
+                    }
+                }
+            }
+        }
+
+ /*       Rectangle {
+            id: dialog_background
+            //source: "file:///home/gao/taomi/Tests/demo/icons/dialog.png"
+            anchors.centerIn: parent
+            width: 400; height: 200
+            color: "black"
+ //           opacity: 0.8
+            radius: 15
+            border.color: "white"
+            border.width: 3
+
+            Text {
+                id: prompt_text
+                text: "您所点的菜单将直接发送到厨房！"
+                font.pixelSize: 23
+                color: "white"
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 60
+            }
+
+            Image {
+                id: ok_button
+                source: "file:///home/gao/taomi/Tests/demo/icons/ok.png"
+                x: 30; y: 135
+
+                Text {
+                    id: ok_text
+                    text: "确 定"
+                    font.pixelSize: 20
+                    color: "white"
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    id: ok_mouse
+                    anchors.fill: parent
+                    z: 5
+                    onClicked: {
+                        if (dialog.state == 'center') {
+                            dialog.state = 'bottom';
+                            foreground.visible = false
+                        }
+                    }
+                }
+            }
+
+            Image {
+                id: cancel_button
+                source: "file:///home/gao/taomi/Tests/demo/icons/cancel.png"
+                x: 215; y: 135
+
+                Text {
+                    id: cancel_text
+                    text: "取 消"
+                    font.pixelSize: 20
+                    color: "white"
+                    anchors.centerIn: parent
+                }
+
+                MouseArea {
+                    id: cancel_mouse
+                    anchors.fill: parent
+                    z: 5
+                    onClicked: {
+                        if (dialog.state == 'center') {
+                            dialog.state = 'bottom';
+                            foreground.visible = false
+                        }
+                    }
+                }
+            }
+        }*/
+
+        states: [
+            State {
+                name: "bottom"
+                PropertyChanges { target: dialog; y: 600 }
+            },
+            State {
+                name: "center"
+                PropertyChanges { target: dialog; y: 200 }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                from: 'bottom'; to: 'center'
+                    NumberAnimation {
+                        target: dialog
+                        properties: 'y'
+                        duration: 150
+                        easing.type: Easing.Linear
+                    }
+            },
+
+            Transition {
+                from: 'center'; to: 'bottom'
+                    NumberAnimation {
+                        target: dialog
+                        properties: 'y'
+                        duration: 150
+                        easing.type: Easing.Linear
+                    }
+            }
+        ]
+
+
+    }
+
+    // Language Dialog
+    Item {
+        id: language_dialog
+        x:260; y: 200; z: 4
+        visible: false
+
+
+        Rectangle {
+            id: language_background
+            width: 500; height: 200
+            color: "black"
+            opacity: 0.8
+            radius: 5
+        }
+
+        Text {
+            id: language_prompt
+            text: "请选择语言"
+            anchors.horizontalCenter: language_background.horizontalCenter
+            y: language_background.y + 20
+   //         z: 6
+            font.pixelSize: 20
+            font.bold: true
+            color: "white"
+        }
+
+        Image {
+            id: chinese_icon
+            source: "file:///home/gao/taomi/Tests/demo/icons/flag_of_china.png"
+            x: 45; y: language_background.y + 65
+            sourceSize.width: 80; sourceSize.height: 80
+
+            Text {
+                id: chinese_text
+                text: "中文"
+                anchors.horizontalCenter: chinese_icon.horizontalCenter
+                y: chinese_icon.y + 25
+                font.pixelSize: 16
+                color: "white"
+            }
+        }
+
+        Image {
+            id: english_icon
+            source: "file:///home/gao/taomi/Tests/demo/icons/flag_of_united_kingdom.png"
+            x: chinese_icon.x + 110; y: chinese_icon.y
+            sourceSize.width: 80; sourceSize.height: 80
+
+            Text {
+                id: english_text
+                text: "English"
+                anchors.horizontalCenter: english_icon.horizontalCenter
+                y: english_icon.y + 25
+                font.pixelSize: 16
+                color: "white"
+            }
+        }
+
+        Image {
+            id: japnese_icon
+            source: "file:///home/gao/taomi/Tests/demo/icons/flag_of_japan.png"
+            x: english_icon.x + 110; y: chinese_icon.y
+            sourceSize.width: 80; sourceSize.height: 80
+
+            Text {
+                id: japnese_text
+                text: "日本語"
+                anchors.horizontalCenter: japnese_icon.horizontalCenter
+                y: japnese_icon.y + 25
+                font.pixelSize: 16
+                color: "white"
+            }
+        }
+
+        Image {
+            id: korean_icon
+            source: "file:///home/gao/taomi/Tests/demo/icons/flag_of_south_korea.png"
+            x: japnese_icon.x + 110; y: chinese_icon.y
+            sourceSize.width: 80; sourceSize.height: 80
+
+            Text {
+                id: korean_text
+                text: "한국의"
+                anchors.horizontalCenter: korean_icon.horizontalCenter
+                y: korean_icon.y + 25
+                font.pixelSize: 16
+                color: "white"
+            }
         }
     }
 
     states: [
         State {
-            name: "MainView"; when: screen.inSelectedView == false
+            name: "MainView"; when: screen.state == "MAIN_VIEW"
             PropertyChanges { target: mainView; x: 0 }
-            PropertyChanges { target: selectedView; x: parent.width }
+            PropertyChanges { target: selectedView; x: parent.width; z: 0 }
+            PropertyChanges { target: selectedView; x: parent.width; z: 0 }
         },
         State {
-            name: "SelectedView"; when: screen.inSelectedView == true
+            name: "SelectedView"; when: screen.state == "SELECTED_VIEW"
             PropertyChanges { target: mainView; x: -parent.width }
-            PropertyChanges { target: selectedView; x: 0 }
+            PropertyChanges { target: selectedView; x: 0; z: 1 }
+        },
+        State {
+            name: "SeatsView"; when: screen.state == "SEATS_VIEW"
+            PropertyChanges { target: mainView; x: -parent.width }
+            PropertyChanges { target: seatsView; x: 0; z: 1 }
         }
     ]
 
@@ -397,6 +784,26 @@ Item {
 
         Transition {
             from: 'SelectedView'; to: 'MainView'
+                NumberAnimation {
+                    target: mainView
+                    properties: 'x'
+                    duration: 200
+                    easing.type: Easing.Linear
+                }
+        },
+
+        Transition {
+            from: 'MainView'; to: 'SeatsView'
+                NumberAnimation {
+                    target: mainView
+                    properties: 'x'
+                    duration: 200
+                    easing.type: Easing.Linear
+                }
+        },
+
+        Transition {
+            from: 'SeatsView'; to: 'MainView'
                 NumberAnimation {
                     target: mainView
                     properties: 'x'
@@ -424,7 +831,7 @@ Item {
 
                 Rectangle {
                     id: titleBar
-                    width: 310; height: 40
+                    width: 305; height: 40
                     z: 3
                     color: "black"
                     gradient: Gradient {
@@ -445,7 +852,7 @@ Item {
 
                 Rectangle {
                     id: categoryView
-                    width: 310; height: 535
+                    width: 305; height: 535
                     z: 1
 
                     color: "black"
@@ -481,7 +888,7 @@ Item {
 
                     Item {
                        id: itemRow
-                       width: 310; height: 200
+                       width: 305; height: 200
 
                        Row {
                             id: foodItem
@@ -501,6 +908,7 @@ Item {
                                 text: item
                                 color: "white"
                                 font.bold: true
+                         //       font.family: "DejaVu Serif"
                                 smooth: true
                             }
 
@@ -511,6 +919,7 @@ Item {
                                 text: iprice
                                 color: "white"
                                 font.bold: true
+                           //     font.family: "DejaVu Serif"
                                 smooth: true
                             }
 
@@ -525,18 +934,20 @@ Item {
                                 anchors.centerIn: parent
                                 state: 'list'
 
-                                Rectangle {
+  /*                              Rectangle {
                                     width: 23; height: 23
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
                                     color: "black"
-                                }
+                                    visible: pic.state == 'list' ? true : false
+                                }*/
 
                                 Image {
                                     id: add
                                     source: "file:///home/gao/taomi/Tests/demo/icons/shopcar.png"
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
+                                    visible: pic.state == 'list' ? true : false
                                     z:5
                                     Text {
                                         id: nums
@@ -593,7 +1004,7 @@ Item {
                                     source: "file:///home/gao/taomi/Tests/demo/icons/selectednum.png"
                                     anchors.right: add.left
                                     anchors.bottom: parent.bottom
-                                    visible: nums.text != "0"
+                                    visible: (nums.text != "0") && (pic.state == 'list' ? true : false)
 
                                     Text {
                                         id: numText
@@ -622,13 +1033,13 @@ Item {
                                             detail.order = iorder
                                             detail.cid = icid
                                             detailViewBar.visible = true
-                                            bottomlBar.visible = false
+                                            bottomBar.visible = false
                                         } else {
                                             pic.state = 'list'
                                             listView.visible = true
                                             detail.visible = false
                                             detailViewBar.visible = false
-                                            bottomlBar.visible = true
+                                            bottomBar.visible = true
                                         }
                                     }
                                 }
@@ -1055,7 +1466,7 @@ Item {
         id: selectedModel
     }
 
-    // jisuanzongjia
+    // 计算总价
     function calcTotal() {
         var i = 0;
         var sum = 0;
